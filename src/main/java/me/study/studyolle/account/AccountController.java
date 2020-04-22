@@ -1,6 +1,9 @@
 package me.study.studyolle.account;
 
 import lombok.RequiredArgsConstructor;
+import me.study.studyolle.domain.Account;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -18,6 +21,8 @@ import javax.validation.Valid;
 public class AccountController {
 
     private final SignUpFormValidator signUpFormValidator;
+    private final AccountRepository accountRepository;
+    private final JavaMailSender javaMailSender;
 
     @InitBinder("signUpForm") // signUpForm 데이터를 받을 때 데이터를 자동으로 바인딩 해준다. 여기선 validator 가 자동으로 실행된다.
     public void initBinder(WebDataBinder webDataBinder) {
@@ -37,6 +42,26 @@ public class AccountController {
             return "account/sign-up";
         }
         //회원 가입 처리
+        Account account = Account.builder()
+                .email(signUpForm.getEmail())
+                .nickname(signUpForm.getNickname())
+                .password(signUpForm.getPassword()) // TODO Encoding 해야함
+                .studyCreatedByWeb(true)
+                .studyEnrollmentResultByWeb(true)
+                .studyUpdateByWeb(true)
+                .build();
+
+        Account newAccount = accountRepository.save(account);
+
+        newAccount.getnerateEmailCheckToken();
+        //TODO Mail Send
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(newAccount.getEmail());
+        mailMessage.setSubject("스터디올래, 회원 가입 인증");
+        mailMessage.setText("/check-email-token?token=" + newAccount.getEmailCheckToken() +
+                "&email=" + newAccount.getEmail());
+        javaMailSender.send(mailMessage);
+
         return "redirect:/";
     }
 }
