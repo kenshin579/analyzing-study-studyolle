@@ -66,7 +66,9 @@ class AccountControllerTest {
                 .andExpect(status().is3xxRedirection());
 
         Account account = accountRepository.findByEmail("dongchul@gmail.com");
+
         assertNotNull(account);
+        assertNotNull(account.getEmailCheckToken());
         assertNotEquals(account.getPassword(), "12345678");
         assertTrue(accountRepository.existsByEmail("dongchul@gmail.com"));
         then(javaMailSender).should().send(any(SimpleMailMessage.class)); // 메일 전송 메서드가 실행되었는지 확인
