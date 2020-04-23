@@ -1,5 +1,6 @@
 package me.study.studyolle.account;
 
+import me.study.studyolle.domain.Account;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,9 @@ class AccountControllerTest {
                 .with(csrf()))
                 .andExpect(status().is3xxRedirection());
 
+        Account account = accountRepository.findByEmail("dongchul@gmail.com");
+        assertNotNull(account);
+        assertNotEquals(account.getPassword(), "12345678");
         assertTrue(accountRepository.existsByEmail("dongchul@gmail.com"));
         then(javaMailSender).should().send(any(SimpleMailMessage.class)); // 메일 전송 메서드가 실행되었는지 확인
     }
