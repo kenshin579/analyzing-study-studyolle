@@ -4,12 +4,17 @@ import lombok.RequiredArgsConstructor;
 import me.study.studyolle.domain.Account;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -21,12 +26,13 @@ public class AccountService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void processNewAccount(@Valid SignUpForm signUpForm) {
+    public Account processNewAccount(@Valid SignUpForm signUpForm) {
         //회원 가입 처리
         Account newAccount = saveNewAccount(signUpForm);
         newAccount.getnerateEmailCheckToken();
         //Mail Send
         sendSignUpConfirmEmail(newAccount);
+        return newAccount;
     }
 
     private Account saveNewAccount(@Valid SignUpForm signUpForm) {
@@ -49,5 +55,16 @@ public class AccountService {
         mailMessage.setText("/check-email-token?token=" + newAccount.getEmailCheckToken() +
                 "&email=" + newAccount.getEmail());
         javaMailSender.send(mailMessage);
+    }
+
+    public void login(Account account) {
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+                account.getNickname(),
+                account.getPassword(),
+                List.of(new SimpleGrantedAuthority("ROLE_USER")));
+        // 정석적으로 인증을 하려면 AuthenticationManager에서 authenticate 를 통해 token을 만들어야 한다.
+        // 정석적 방법을 쓰지 않는 이유는 정석적인 방법을 사용한다면 plain password가 token에 저장되기 때문인데 형재는 plain password를 사용하지 않을 것이기 때문에
+        // 이 방법을 사용한다.
+        SecurityContextHolder.getContext().setAuthentication(token);
     }
 }
