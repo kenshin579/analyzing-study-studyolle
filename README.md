@@ -21,4 +21,7 @@
                 * 매번 동일하지 않은 값을 입력하더라도 문제 되지 않도록. 
                 * 솔트 값은 인코딩을 할 때만 사용한다.
     * 인증 메일 확인
-        * 
+    * 현재 인증된 사용자 정보 참조
+        * @AuthenticationPrincipal
+        * SpEL
+        * Custom Annotation (@CurrentUser)
