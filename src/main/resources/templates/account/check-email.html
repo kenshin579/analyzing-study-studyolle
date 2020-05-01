@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head">
+<body class="bg-light">
+    <div th:replace="fragments.html :: main-nav"></div>
+
+    <div class="py-5 text-center">
+        <p class="lead">스터디올래 이메일 확인</p>
+        <div class="alert alert-danger" role="alert">
+            <a href="#" th:href="@{/resend-confirm-email}" class="alert-link">이메일 재전송</a>
+        </div>
+    </div>
+
+
+    <div th:replace="fragments.html :: footer"></div>
+</body>
+</html>
