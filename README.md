@@ -30,4 +30,6 @@
         * UserDetailsService 등록
             * UserDetailsService의 빈이 하나만 등록되어 있으면 SecurityConfig에 별다른 설정하지 않아도 자동으로 사용한다.(PasswordEncoder도 마찬가지)
         * UserDetailsService에서 UserDetails 타입의 객체를 리턴
-            
+    * Form Login parameter 네이밍변경은 security 설정에서 변경가능.
+    * RememberMe
+        * 세션이 만료되더라도 쿠키에 인증정보를 담아두어 인증이 될 수 있도록.            
