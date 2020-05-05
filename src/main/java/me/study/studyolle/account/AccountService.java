@@ -60,7 +60,7 @@ public class AccountService implements UserDetailsService { // UserDetails Bean 
         javaMailSender.send(mailMessage);
     }
 
-    public void login(Account account) {
+    private void login(Account account) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                 new UserAccount(account),
                 account.getPassword(),
@@ -82,5 +82,11 @@ public class AccountService implements UserDetailsService { // UserDetails Bean 
             throw new UsernameNotFoundException(emailOrNickname);
         }
         return new UserAccount(account);  // Principal 객체 리턴
+    }
+
+    @Transactional
+    public void completeSignUp(Account account) {
+        account.completeSignUp();
+        login(account);
     }
 }

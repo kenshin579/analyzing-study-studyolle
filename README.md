@@ -33,3 +33,40 @@
     * Form Login parameter 네이밍변경은 security 설정에서 변경가능.
     * RememberMe
         * 세션이 만료되더라도 쿠키에 인증정보를 담아두어 인증이 될 수 있도록.            
+* RememberMe
+    * 세션이 만료 되더라도 로그인을 유지하고 싶을 때 사용하는 방법  
+      쿠키에 인증 정보를 남겨두고 세션이 만료 됐을 때에는 쿠키에 남아있는 정보로 인증한다.
+    * 해시 기반의 쿠키
+        * Username
+        * Password
+        * 만료 기간
+        * Key (애플리케이션 마다 다른 값을 줘야 한다.)
+        * 치명적인 단점, 쿠키를 다른 사람이 가져가면... 그 계정은 탈취당한 것과 같다.
+    
+    * 조금 더 안전한 방법은?
+        * 쿠키안에 랜덤한 문자열(토큰)을 만들어 같이 저장하고 매번 인증할 때마다 바꾼다.
+        * Username, 토큰
+        * 문제는, 이 방법도 취약하다. 쿠키를 탈취 당하면, 해커가 쿠키로 인증을 할 수 있고, 희생자는 쿠키로 인증하지 못한다.
+    
+    * 조금 더 개선한 방법
+        * https://www.programering.com/a/MDO0MzMwATA.html
+        * Username + 토큰(랜덤, 매번 바뀜) + 시리즈(랜덤, 고정)
+        * 쿠키를 탈취 당한 경우, 희생자는 유효하지 않은 토큰과 유효한 시리즈와 Username으로 접속하게 된다.
+        * 이 경우, 모든 토큰을 삭제하여 해커가 더이상 탈취한 쿠키를 사용하지 못하도록 방지할 수 있다.
+        * jdbc Token 저장소 사용
+            ```java
+              http.rememberMe()
+                      .userDetailsService(accountService)
+                      .tokenRepository(tokenRepository());
+              
+              @Bean
+              public PersistentTokenRepository tokenRepository() {
+                  JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+                  jdbcTokenRepository.setDataSource(dataSource);
+                  return jdbcTokenRepository;
+              }
+            ```         
+        * persistent_logins 테이블 만들기
+            * create table persistent_logins (username varchar(64) not null, series varchar(64) primary key, token varchar(64) not null, last_used timestamp not null)
+            * Entity 맵핑으로도 사용 가능.
+
