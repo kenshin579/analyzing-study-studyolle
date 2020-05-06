@@ -60,7 +60,7 @@ public class AccountService implements UserDetailsService { // UserDetails Bean 
         javaMailSender.send(mailMessage);
     }
 
-    private void login(Account account) {
+    public void login(Account account) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                 new UserAccount(account),
                 account.getPassword(),
