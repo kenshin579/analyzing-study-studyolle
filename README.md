@@ -69,4 +69,5 @@
         * persistent_logins 테이블 만들기
             * create table persistent_logins (username varchar(64) not null, series varchar(64) primary key, token varchar(64) not null, last_used timestamp not null)
             * Entity 맵핑으로도 사용 가능.
+* Redirect시 간단한 데이터를 전달하고 싶을경우 **RedirectAttributes.addFlashAttribute()** 사용            
 
