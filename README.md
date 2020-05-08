@@ -70,4 +70,10 @@
             * create table persistent_logins (username varchar(64) not null, series varchar(64) primary key, token varchar(64) not null, last_used timestamp not null)
             * Entity 맵핑으로도 사용 가능.
 * Redirect시 간단한 데이터를 전달하고 싶을경우 **RedirectAttributes.addFlashAttribute()** 사용            
-
+* 프로필 수정 테스트
+    * 인증된 사용자만 접근할 수 있는 기능을 테스트 해야한다.
+        * 실제 DB에 저장되어 있는 정보에 대응하는 인증된 Authentication이 필요.
+        * @WithMockUser로는 처리 할 수 없다.
+    * 인증된 사용자를 제공할 커스텀 애노테이션 만들기
+        * @WithAccount
+        * https://docs.spring.io/spring-security/site/docs/current/reference/html/test.html

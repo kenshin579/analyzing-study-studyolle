@@ -17,19 +17,19 @@ import javax.validation.Valid;
 @Controller
 @RequiredArgsConstructor
 public class SettingsController {
-    private static final String SETTINGS_PROFILE_VIEW_NAME = "settings/profile";
-    private static final String SETTINGS_PROFILE_URL = "/settings/profile";
+    static final String SETTINGS_PROFILE_VIEW_NAME = "settings/profile";
+    static final String SETTINGS_PROFILE_URL = "/settings/profile";
 
     private final AccountService accountService;
 
-    @GetMapping("/settings/profile")
+    @GetMapping(SETTINGS_PROFILE_URL)
     public String profileForm(@CurrentUser Account account, Model model) {
         model.addAttribute(account);
         model.addAttribute(new Profile(account));
-        return "settings/profile";
+        return SETTINGS_PROFILE_VIEW_NAME;
     }
 
-    @PostMapping("/settings/profile")
+    @PostMapping(SETTINGS_PROFILE_URL)
     public String updateProfile(@CurrentUser Account account, @Valid Profile profile, Errors errors,
                                 Model model, RedirectAttributes attributes) {
         // 현재 account는 detached 상태이다. 한번이라도 영속성 컨텍스트에 들어간 객체 (id값이 있는 상태)
