@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-public class PersistentLogins {
+public class PersistentLogins { // For RememberMe
 
     @Id
     @Column(length = 64)
