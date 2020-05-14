@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import me.study.studyolle.domain.Account;
 
 @Data
-@NoArgsConstructor
 public class Notification {
     private boolean studyCreatedByEmail;
 
@@ -18,13 +17,4 @@ public class Notification {
     private boolean studyUpdateByEmail;
 
     private boolean studyUpdateByWeb;
-
-    public Notification(Account account) {
-        this.studyCreatedByEmail = account.isStudyCreatedByEmail();
-        this.studyCreatedByWeb = account.isStudyCreatedByWeb();
-        this.studyEnrollmentResultByEmail = account.isStudyEnrollmentResultByEmail();
-        this.studyEnrollmentResultByWeb = account.isStudyEnrollmentResultByWeb();
-        this.studyUpdateByEmail = account.isStudyUpdateByEmail();
-        this.studyUpdateByWeb = account.isStudyUpdateByWeb();
-    }
 }

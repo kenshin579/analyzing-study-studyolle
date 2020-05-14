@@ -77,3 +77,9 @@
     * 인증된 사용자를 제공할 커스텀 애노테이션 만들기
         * @WithAccount
         * https://docs.spring.io/spring-security/site/docs/current/reference/html/test.html
+* ModelMapper 설정
+    * 객체의 프로퍼티를 다른 객체의 프로퍼티로 맵핑해주는 유틸리티.
+    * 토크나이저 설정
+        * CamelCase -> UnderScore
+            * UNDERSCORE(_)를 사용했을 때에만 nested 객체를 참조하는 것으로 간주하고 그렇지 않은 경우에는 해당 객체의 직속 프로퍼티에 바인딩 한다.
+            * http://modelmapper.org/user-manual/configuration/#matching-strategies

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.study.studyolle.domain.Account;
 import me.study.studyolle.settings.Notification;
 import me.study.studyolle.settings.Profile;
+import org.modelmapper.ModelMapper;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,6 +30,7 @@ public class AccountService implements UserDetailsService { // UserDetails Bean 
     private final AccountRepository accountRepository;
     private final JavaMailSender javaMailSender;
     private final PasswordEncoder passwordEncoder;
+    private final ModelMapper modelMapper;
 
     @Transactional
     public Account processNewAccount(@Valid SignUpForm signUpForm) {
@@ -93,26 +95,29 @@ public class AccountService implements UserDetailsService { // UserDetails Bean 
     }
 
     public void updateProfile(Account account, Profile profile) {
-        account.setUrl(profile.getUrl());
-        account.setOccupation(profile.getOccupation());
-        account.setBio(profile.getBio());
-        account.setLocation(profile.getLocation());
-        account.setProfileImage(profile.getProfileImage());
+        modelMapper.map(profile, account);
+//        account.setUrl(profile.getUrl());
+//        account.setOccupation(profile.getOccupation());
+//        account.setBio(profile.getBio());
+//        account.setLocation(profile.getLocation());
+//        account.setProfileImage(profile.getProfileImage());
         accountRepository.save(account);
     }
 
+    @Transactional
     public void updatePassword(Account account, String newPassword) {
         account.setPassword(passwordEncoder.encode(newPassword));
         accountRepository.save(account);
     }
 
     public void updateNotification(Account account, Notification notification) {
-        account.setStudyCreatedByWeb(notification.isStudyCreatedByWeb());
-        account.setStudyCreatedByEmail(notification.isStudyCreatedByEmail());
-        account.setStudyUpdateByWeb(notification.isStudyUpdateByWeb());
-        account.setStudyUpdateByEmail(notification.isStudyUpdateByEmail());
-        account.setStudyEnrollmentResultByEmail(notification.isStudyEnrollmentResultByEmail());
-        account.setStudyEnrollmentResultByWeb(notification.isStudyEnrollmentResultByWeb());
+        modelMapper.map(notification, account);
+//        account.setStudyCreatedByWeb(notification.isStudyCreatedByWeb());
+//        account.setStudyCreatedByEmail(notification.isStudyCreatedByEmail());
+//        account.setStudyUpdateByWeb(notification.isStudyUpdateByWeb());
+//        account.setStudyUpdateByEmail(notification.isStudyUpdateByEmail());
+//        account.setStudyEnrollmentResultByEmail(notification.isStudyEnrollmentResultByEmail());
+//        account.setStudyEnrollmentResultByWeb(notification.isStudyEnrollmentResultByWeb());
         accountRepository.save(account);
     }
 }

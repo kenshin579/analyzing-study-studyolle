@@ -5,6 +5,7 @@ import me.study.studyolle.account.AccountService;
 import me.study.studyolle.account.CurrentUser;
 import me.study.studyolle.domain.Account;
 import org.dom4j.rule.Mode;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -36,10 +37,12 @@ public class SettingsController {
 
     private final AccountService accountService;
 
+    private final ModelMapper modelMapper;
+
     @GetMapping(SETTINGS_PROFILE_URL)
     public String profileForm(@CurrentUser Account account, Model model) {
         model.addAttribute(account);
-        model.addAttribute(new Profile(account));
+        model.addAttribute(modelMapper.map(account, Profile.class));
         return SETTINGS_PROFILE_VIEW_NAME;
     }
 
@@ -80,7 +83,7 @@ public class SettingsController {
     @GetMapping(SETTINGS_NOTIFICATIONS_URL)
     public String updateNotificationForm(@CurrentUser Account account, Model model) {
         model.addAttribute(account);
-        model.addAttribute(new Notification());
+        model.addAttribute(modelMapper.map(account, Notification.class));
         return SETTINGS_NOTIFICATIONS_VIEW_NAME;
     }
 
