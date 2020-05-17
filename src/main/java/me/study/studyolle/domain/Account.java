@@ -53,7 +53,7 @@ public class Account {
 
     private boolean studyUpdateByWeb = true;
 
-    public void getnerateEmailCheckToken() {
+    public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();
         this.emailCheckTokenGeneratedAt = LocalDateTime.now();
     }

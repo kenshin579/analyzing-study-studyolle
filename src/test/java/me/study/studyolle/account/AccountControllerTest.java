@@ -102,7 +102,7 @@ class AccountControllerTest {
                 .nickname("dongchul")
                 .build();
         Account newAccount = accountRepository.save(account);
-        newAccount.getnerateEmailCheckToken();
+        newAccount.generateEmailCheckToken();
 
         mockMvc.perform(get("/check-email-token")
                 .param("token", newAccount.getEmailCheckToken())
