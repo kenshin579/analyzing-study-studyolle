@@ -2,14 +2,13 @@ package me.study.studyolle.account;
 
 import lombok.RequiredArgsConstructor;
 import me.study.studyolle.domain.Account;
-import me.study.studyolle.settings.Notification;
-import me.study.studyolle.settings.Profile;
+import me.study.studyolle.settings.form.Notification;
+import me.study.studyolle.settings.form.Profile;
 import org.modelmapper.ModelMapper;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,7 +16,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.thymeleaf.util.StringUtils;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -119,5 +117,11 @@ public class AccountService implements UserDetailsService { // UserDetails Bean 
 //        account.setStudyEnrollmentResultByEmail(notification.isStudyEnrollmentResultByEmail());
 //        account.setStudyEnrollmentResultByWeb(notification.isStudyEnrollmentResultByWeb());
         accountRepository.save(account);
+    }
+
+    public void updateNickname(Account account, String nickname) {
+        account.setNickname(nickname);
+        accountRepository.save(account);
+        login(account);
     }
 }
