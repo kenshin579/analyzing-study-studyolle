@@ -16,10 +16,10 @@ public class Account {
     @Id @GeneratedValue
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String nickname;
 
     private String password;
