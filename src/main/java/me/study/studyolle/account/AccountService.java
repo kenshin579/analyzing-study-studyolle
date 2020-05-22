@@ -2,6 +2,7 @@ package me.study.studyolle.account;
 
 import lombok.RequiredArgsConstructor;
 import me.study.studyolle.domain.Account;
+import me.study.studyolle.domain.Tag;
 import me.study.studyolle.settings.form.Notification;
 import me.study.studyolle.settings.form.Profile;
 import org.modelmapper.ModelMapper;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -133,5 +135,13 @@ public class AccountService implements UserDetailsService { // UserDetails Bean 
         mailMessage.setText("/login-by-email?token=" + account.getEmailCheckToken() +
                 "&email=" + account.getEmail());
         javaMailSender.send(mailMessage);
+    }
+
+    public void addTag(Account account, Tag tag) {
+        Optional<Account> byId = accountRepository.findById(account.getId());
+        byId.ifPresent(a -> a.getTags().add(tag));
+
+        // accountRepository.getOne() LazyLoding
+
     }
 }
