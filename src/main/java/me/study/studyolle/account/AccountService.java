@@ -150,4 +150,9 @@ public class AccountService implements UserDetailsService { // UserDetails Bean 
         Optional<Account> byId = accountRepository.findById(account.getId());
         return byId.orElseThrow().getTags();
     }
+
+    public void removeTag(Account account, Tag tag) {
+        Optional<Account> byId = accountRepository.findById(account.getId());
+        byId.orElseThrow().getTags().remove(tag);
+    }
 }

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -148,7 +149,7 @@ public class SettingsController {
         return SETTINGS_TAGS_VIEW_NAME;
     }
 
-    @PostMapping("/settings/tags/add")
+    @PostMapping(SETTINGS_TAGS_URL + "/add")
     @ResponseBody
     public ResponseEntity addTag(@CurrentUser Account account, @RequestBody TagForm tagForm) {
         String title = tagForm.getTagTitle();
@@ -156,6 +157,19 @@ public class SettingsController {
                 .title(tagForm.getTagTitle())
                 .build()));
         accountService.addTag(account, tag);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping(SETTINGS_TAGS_URL + "/remove")
+    @ResponseBody
+    public ResponseEntity removeTag(@CurrentUser Account account, @RequestBody TagForm tagForm) {
+        String title = tagForm.getTagTitle();
+        Tag tag = tagRepository.findByTitle(title).get();
+        if (Objects.isNull(tag)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        accountService.removeTag(account, tag);
         return ResponseEntity.ok().build();
     }
 }
