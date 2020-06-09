@@ -37,22 +37,15 @@ public class AccountService implements UserDetailsService { // UserDetails Bean 
     public Account processNewAccount(@Valid SignUpForm signUpForm) {
         //회원 가입 처리
         Account newAccount = saveNewAccount(signUpForm);
-        newAccount.generateEmailCheckToken();
         //Mail Send
         sendSignUpConfirmEmail(newAccount);
         return newAccount;
     }
 
     private Account saveNewAccount(@Valid SignUpForm signUpForm) {
-        Account account = Account.builder()
-                .email(signUpForm.getEmail())
-                .nickname(signUpForm.getNickname())
-                .password(passwordEncoder.encode(signUpForm.getPassword())) // TODO Encoding 해야함
-                .studyCreatedByWeb(true)
-                .studyEnrollmentResultByWeb(true)
-                .studyUpdateByWeb(true)
-                .build();
-
+        signUpForm.setPassword(passwordEncoder.encode(signUpForm.getPassword()));
+        Account account = modelMapper.map(signUpForm, Account.class);
+        account.generateEmailCheckToken();
         return accountRepository.save(account);
     }
 
