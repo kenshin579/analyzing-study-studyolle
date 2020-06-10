@@ -83,3 +83,13 @@
         * CamelCase -> UnderScore
             * UNDERSCORE(_)를 사용했을 때에만 nested 객체를 참조하는 것으로 간주하고 그렇지 않은 경우에는 해당 객체의 직속 프로퍼티에 바인딩 한다.
             * http://modelmapper.org/user-manual/configuration/#matching-strategies
+* 지역 도메인
+지역도 벨류가 아닌 엔티티
+
+* Zone
+    * City
+    * LocalNameOfCity
+    * Province
+* Account 와 Zone의 객체지향적인 관계
+    * 다대다 단방향 관계
+    
