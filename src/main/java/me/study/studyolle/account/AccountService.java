@@ -3,6 +3,7 @@ package me.study.studyolle.account;
 import lombok.RequiredArgsConstructor;
 import me.study.studyolle.domain.Account;
 import me.study.studyolle.domain.Tag;
+import me.study.studyolle.domain.Zone;
 import me.study.studyolle.settings.form.Notification;
 import me.study.studyolle.settings.form.Profile;
 import org.modelmapper.ModelMapper;
@@ -147,5 +148,20 @@ public class AccountService implements UserDetailsService { // UserDetails Bean 
     public void removeTag(Account account, Tag tag) {
         Optional<Account> byId = accountRepository.findById(account.getId());
         byId.orElseThrow().getTags().remove(tag);
+    }
+
+    public Set<Zone> getZones(Account account) {
+        Optional<Account> byId = accountRepository.findById(account.getId());
+        return byId.orElseThrow().getZones();
+    }
+
+    public void addZone(Account account, Zone zone) {
+        Optional<Account> byId = accountRepository.findById(account.getId());
+        byId.ifPresent((findAccount) -> findAccount.getZones().add(zone)) ;
+    }
+
+    public void removeZone(Account account, Zone zone) {
+        Optional<Account> byId = accountRepository.findById(account.getId());
+        byId.ifPresent((findAccount) -> findAccount.getZones().remove(zone)) ;
     }
 }
