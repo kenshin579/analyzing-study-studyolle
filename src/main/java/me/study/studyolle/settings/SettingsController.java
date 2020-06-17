@@ -25,7 +25,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -203,7 +202,7 @@ public class SettingsController {
     @PostMapping(SETTINGS_ZONES_URL + "/add")
     @ResponseBody
     public ResponseEntity addZone(@CurrentUser Account account, @RequestBody ZoneForm zoneForm) throws JsonProcessingException {
-        Zone zone = zoneRepository.findCityAndProvince(zoneForm.getCityName(), zoneForm.getProvinceName());
+        Zone zone = zoneRepository.findByCityAndProvince(zoneForm.getCityName(), zoneForm.getProvinceName());
         if (zone == null) {
             return ResponseEntity.badRequest()
                     .build();
@@ -215,7 +214,7 @@ public class SettingsController {
     @PostMapping(SETTINGS_ZONES_URL + "/remove")
     @ResponseBody
     public ResponseEntity removeZone(@CurrentUser Account account, @RequestBody ZoneForm zoneForm) throws JsonProcessingException {
-        Zone zone = zoneRepository.findCityAndProvince(zoneForm.getCityName(), zoneForm.getProvinceName());
+        Zone zone = zoneRepository.findByCityAndProvince(zoneForm.getCityName(), zoneForm.getProvinceName());
         if (zone == null) {
             return ResponseEntity.badRequest()
                     .build();
