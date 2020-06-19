@@ -92,4 +92,13 @@
     * Province
 * Account 와 Zone의 객체지향적인 관계
     * 다대다 단방향 관계
-    
+
+* SMTP 설정
+    * properties에 spring에서 제공하는 mailsender 설정값을 정의하여 실제 Mail이 전송되는 Mailsender 주입받음.  
+    * 개인 개정 정보가 들어가 있기때문에 properties 분리
+    * 대체 서비스 (Gmail을 그대로 서비스에 사용할 수 없다.)
+          * https://sendgrid.com/
+          * https://www.mailgun.com/
+          * https://aws.amazon.com/ses/
+          * https://gsuite.google.com/
+          * ...
