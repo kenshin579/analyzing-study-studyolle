@@ -81,7 +81,7 @@ class MainControllerTest {
                 .param("password", "12222345678")
                 .with(csrf()))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/login/error"))
+                .andExpect(redirectedUrl("/login?error"))
                 .andExpect(unauthenticated());
 
     }
