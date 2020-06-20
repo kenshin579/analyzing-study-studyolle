@@ -102,3 +102,12 @@
           * https://aws.amazon.com/ses/
           * https://gsuite.google.com/
           * ...
+* EmailService 추상화
+    * HTML 이메일 전송
+        * MimeMessage 전송
+        * MimeMessageHelper : MimeMessage 만들 때 사용할 수 있는 유틸리티
+    * EmailService 인터페이스
+        * void sendEmail(EmailMessage emailMessage);
+    * EmailService 인터페이스 구현체
+        * ConsoleEmailService : 콘솔 출력
+        * HtmlEmailService : JavaMailSender를 사용한 Html 이메일 전송
