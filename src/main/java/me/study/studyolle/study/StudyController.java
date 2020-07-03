@@ -27,10 +27,18 @@ public class StudyController {
     private final StudyService studyService;
     private final ModelMapper modelMapper;
     private final StudyFormValidator studyFormValidator;
+    private final StudyRepository studyRepository;
 
     @InitBinder("studyForm")
     public void studyFormInitBinder(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(studyFormValidator);
+    }
+
+    @GetMapping("/study/{path}")
+    public String viewStudy(@CurrentUser Account account, String path, Model model) {
+        model.addAttribute(account);
+        model.addAttribute(studyRepository.findByPath(path));
+        return "study/view";
     }
 
     @GetMapping("/new-study")
