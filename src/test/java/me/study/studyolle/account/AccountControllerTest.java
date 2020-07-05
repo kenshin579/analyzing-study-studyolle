@@ -58,8 +58,8 @@ class AccountControllerTest {
                 .param("email", "email..")
                 .param("password", "12345")
                 .with(csrf()))
-                    .andExpect(status().isOk())
-                    .andExpect(view().name("account/sign-up"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("account/sign-up"))
                 .andExpect(unauthenticated());
     }
 

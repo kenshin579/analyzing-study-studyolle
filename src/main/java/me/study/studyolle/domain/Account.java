@@ -10,11 +10,16 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Getter @Setter @EqualsAndHashCode(of = "id")
-@Builder @AllArgsConstructor @NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode(of = "id")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Account {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
 
     @Column(unique = true, nullable = false)
@@ -41,7 +46,8 @@ public class Account {
 
     private String location;
 
-    @Lob @Basic(fetch = FetchType.EAGER)
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
     private String profileImage;
 
     private boolean studyCreatedByEmail;

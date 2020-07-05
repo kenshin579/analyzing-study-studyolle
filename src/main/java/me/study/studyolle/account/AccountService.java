@@ -184,11 +184,11 @@ public class AccountService implements UserDetailsService { // UserDetails Bean 
 
     public void addZone(Account account, Zone zone) {
         Optional<Account> byId = accountRepository.findById(account.getId());
-        byId.ifPresent((findAccount) -> findAccount.getZones().add(zone)) ;
+        byId.ifPresent((findAccount) -> findAccount.getZones().add(zone));
     }
 
     public void removeZone(Account account, Zone zone) {
         Optional<Account> byId = accountRepository.findById(account.getId());
-        byId.ifPresent((findAccount) -> findAccount.getZones().remove(zone)) ;
+        byId.ifPresent((findAccount) -> findAccount.getZones().remove(zone));
     }
 }

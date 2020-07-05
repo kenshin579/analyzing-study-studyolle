@@ -118,7 +118,7 @@ public class SettingsController {
 
     @PostMapping(SETTINGS_NOTIFICATIONS_URL)
     public String updateNotification(@CurrentUser Account account, @Valid Notification notification, Errors errors,
-                                 Model model, RedirectAttributes redirectAttributes) {
+                                     Model model, RedirectAttributes redirectAttributes) {
         if (errors.hasErrors()) {
             model.addAttribute(account);
             return SETTINGS_NOTIFICATIONS_VIEW_NAME;
